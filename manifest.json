@@ -23,8 +23,9 @@
     },
     "content_scripts": [{
       "matches": [
-        "https://acanthus.cis.kanazawa-u.ac.jp/base/lms-course/list"
-      ],
+        "https://eduweb.sta.kanazawa-u.ac.jp/portal/StudentApp/Regist/RegistList.aspx",
+        "https://eduweb.sta.kanazawa-u.ac.jp/portal/StudentApp/Blank.aspx",
+        "https://acanthus.cis.kanazawa-u.ac.jp/base/lms-course/list"],
       "js": [
         "jquery-3.6.0.min.js",
         "main.js"

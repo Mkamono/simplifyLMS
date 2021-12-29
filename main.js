@@ -21,6 +21,8 @@ $(document).ready(function(){
 
     let element = $(".module-toggle-panel__title-area > a")
     for (let i=0; i<element.length; i++){
+
+        //レイアウト調整
         if($(".module-toggle-panel__title-area > a").eq(i).text().indexOf("授業") == -1){
             openAndClosePanel(element.eq(i))
         }else{
@@ -32,17 +34,19 @@ $(document).ready(function(){
         }
     }
 
+    //チェックボックス
     $("table *").css("width", "")
     $(".module-toggle-panel__body-inner table tr").prepend('<td><input type="checkbox" class="HideRow"></td>');
     $(".module-toggle-panel__body-inner table th").parent().find("input").parent().replaceWith('<th><input type="checkbox" class="HideRow" disabled></th>')
 
+    //chromeitems
     if (selections.length == 0){
         for (let i=0; i<$(".module-toggle-panel__body-inner table tr").length; i++){
             selections.push("")
         }
     }
 
-    syncfunc().then(items => {
+    getcheck().then(items => {
         selections = items
 
         if (selections == undefined){
@@ -65,6 +69,7 @@ $(document).ready(function(){
 
     })
 
+    //action
     $('.hide').on('click', function() {
         $(".module-toggle-panel__body-inner table tr .HideRow").each(function (i, elem) {
             if (elem.checked) {
@@ -100,7 +105,6 @@ $(document).ready(function(){
         });
     })
 
-
     $('.HideRow').on('click', function(){
         $(".module-toggle-panel__body-inner table tr .HideRow").each(function(i, elem){
             check_delete()
@@ -110,9 +114,8 @@ $(document).ready(function(){
                 "selections": selections,
             }
         );
-        syncfunc()   
+        getcheck()   
     })
-    
     
     $("#menu").on("click", function(){
         if($(".module-operation-container" + ".module-operation-container--type_nomal" + ".lms-list-search-area").children("div").is(":visible")){
@@ -128,13 +131,11 @@ $(document).ready(function(){
         }
         
     })
-    
 })
 
 //本処理終わり
 
-
-function syncfunc(){
+function getcheck(){
     return new Promise((resolve, reject) => {
         chrome.storage.sync.get(["selections"], (items) => {
             if (chrome.runtime.lastError){
