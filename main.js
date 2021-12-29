@@ -133,6 +133,7 @@ $(document).ready(function(){
 
 //本処理終わり
 
+
 function syncfunc(){
     return new Promise((resolve, reject) => {
         chrome.storage.sync.get(["selections"], (items) => {
