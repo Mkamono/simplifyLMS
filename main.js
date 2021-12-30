@@ -122,6 +122,7 @@ if (url == "https://acanthus.cis.kanazawa-u.ac.jp/base/lms-course/list"){
             
         })
     })
+    //eduweb
 }else if (url == "https://eduweb.sta.kanazawa-u.ac.jp/portal/StudentApp/Blank.aspx#regist_results"){
     __doPostBack('ctl00$bhHeader$ctl30$lnk', '')
 }else if (url == "https://eduweb.sta.kanazawa-u.ac.jp/portal/StudentApp/Regist/RegistList.aspx"){
@@ -161,6 +162,17 @@ function getcheck(){
     })
 }
 
+function getquater() {
+	return new Promise((resolve, reject) => {
+		chrome.storage.sync.get(["quater"], (items) => {
+			if (chrome.runtime.lastError) {
+				return reject("11")
+			}
+			resolve(items.quater)
+		})
+	})
+}
+
 function check_delete(){
     $(".module-toggle-panel__body-inner table tr .HideRow").each(function(i, elem){
         if(elem.checked){
@@ -185,17 +197,6 @@ function openAndClosePanel(btn) {
         $panel.find(".module-toggle-panel__body-inner").show();
         $panel.addClass("is-open");
     }
-}
-
-function getquater() {
-	return new Promise((resolve, reject) => {
-		chrome.storage.sync.get(["quater"], (items) => {
-			if (chrome.runtime.lastError) {
-				return reject("11")
-			}
-			resolve(items.quater)
-		})
-	})
 }
 
 function __doPostBack(eventTarget, eventArgument) {
