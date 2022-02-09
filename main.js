@@ -132,7 +132,6 @@ if (url == "https://acanthus.cis.kanazawa-u.ac.jp/base/lms-course/list"){
             quater = items
             if ($select.val() !== quater) {
                 $select.val(quater)
-                alert(quater, $select.val())
                 setTimeout(
                     '__doPostBack(\'ctl00$phContents$ucRegistSearchList$ddlTerm\',\'\')',
                     0)
