@@ -1,6 +1,6 @@
 {
     "name": "simplify LMS",
-    "version": "1.0.7",
+    "version": "1.0.8",
     "manifest_version": 3,
     "permissions": [
         "storage"

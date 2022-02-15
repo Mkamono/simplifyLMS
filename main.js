@@ -1,6 +1,7 @@
 let bright = 245
 let gray = `rgb(${bright}, ${bright}, ${bright})`
 let url = location.href
+let selections = []
 
 //LMS
 if (url == "https://acanthus.cis.kanazawa-u.ac.jp/base/lms-course/list"){
@@ -40,9 +41,9 @@ if (url == "https://acanthus.cis.kanazawa-u.ac.jp/base/lms-course/list"){
         //chromeitems
         getcheck().then(items => {
             selections = items
-            if (selections.length == 0){
+            if (selections == undefined){
                 for (let i=0; i<$(".module-toggle-panel__body-inner table tr").length; i++){
-                    selections.push("")
+                    selections.push(false)
                 }
             }
     
@@ -86,6 +87,12 @@ if (url == "https://acanthus.cis.kanazawa-u.ac.jp/base/lms-course/list"){
                 $(elem).parent().show()
             });
             $(".module-toggle-panel__body-inner table th").parent().find("input").prop('checked', false)
+            check_delete()
+            chrome.storage.sync.set(
+                {
+                    "selections": selections,
+                }
+            );
         })
     
         $('.uncheck_all').on('click', function() {
@@ -93,12 +100,16 @@ if (url == "https://acanthus.cis.kanazawa-u.ac.jp/base/lms-course/list"){
                 elem.checked = false
                 $(elem).parent().show()
             });
+            check_delete()
+            chrome.storage.sync.set(
+                {
+                    "selections": selections,
+                }
+            );
         })
     
         $('.HideRow').on('click', function(){
-            $(".module-toggle-panel__body-inner table tr .HideRow").each(function(i, elem){
-                check_delete()
-            });
+            check_delete()
             chrome.storage.sync.set(
                 {
                     "selections": selections,
@@ -154,10 +165,11 @@ if (url == "https://acanthus.cis.kanazawa-u.ac.jp/base/lms-course/list"){
 function getcheck(){
     return new Promise((resolve, reject) => {
         chrome.storage.sync.get(["selections"], (items) => {
+            console.log(items)
             if (chrome.runtime.lastError){
                 return reject([])
             }
-            resolve(items.selections)
+            return resolve(items.selections)
         })
     })
 }
@@ -182,7 +194,7 @@ function check_delete(){
         if(elem.checked){
             selections[i] = true
         }else{
-            selections[i] = ''
+            selections[i] = false
         }
     })
 }
