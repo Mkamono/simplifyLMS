@@ -42,6 +42,7 @@ if (url == "https://acanthus.cis.kanazawa-u.ac.jp/base/lms-course/list"){
         getcheck().then(items => {
             selections = items
             if (selections == undefined){
+                selections = []
                 for (let i=0; i<$(".module-toggle-panel__body-inner table tr").length; i++){
                     selections.push(false)
                 }
